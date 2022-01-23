@@ -3,6 +3,8 @@ import {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {ReactComponent as ArrowRightIcon} from '../assets/svg/keyboardArrowRightIcon.svg';
 import visibilityIcon from '../assets/svg/visibilityIcon.svg';
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth'; 
+import {db} from '../firebase.config';
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,9 +21,28 @@ function SignUp() {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value
-    }))
+    }));
 
   }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      updateProfile(auth.currentUser, {
+        displayName: name
+      });
+
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
 
   return (
     <>
@@ -30,7 +51,7 @@ function SignUp() {
           <p className='pageHeader'>Welcome Back!</p>
         </header>
         
-        <form>
+        <form onSubmit={handleSubmit}>
           <input type="text" 
             className="nameInput" placeholder='Your name' id="name" value={name}
             onChange={handleChange}
@@ -68,9 +89,7 @@ function SignUp() {
         <Link to='/sign-in' className='registerLink'>
           Sign In Instead
         </Link>
-
-        
-       
+    
       </div>
     </>
 
