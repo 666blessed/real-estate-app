@@ -93,8 +93,7 @@ function CreateListing() {
 
         } else {
             geolocation.lat = latitude;
-            geolocation.lng = longitude;
-            location = address;
+            geolocation.lng = longitude;           
         }
 
 
@@ -148,9 +147,9 @@ function CreateListing() {
             timestamp: serverTimestamp(),
         }
 
+        formDataCopy.location = address;
         delete formDataCopy.images;
-        delete formDataCopy.address;
-        location && (formDataCopy.location = location);
+        delete formDataCopy.address;       
         !formDataCopy.offer && delete formDataCopy.discountedPrice;
 
         const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
