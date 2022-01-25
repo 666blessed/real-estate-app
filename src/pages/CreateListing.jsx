@@ -7,6 +7,7 @@ import {toast} from 'react-toastify';
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage';
 import {db} from '../firebase.config';
 import {v4 as uuidv4} from 'uuid';
+import {addDoc, collection, serverTimestamp} from 'firebase/firestore';
 
 function CreateListing() {
     const [geolocationEnabled, setGeolocationEnabled] = useState(true);
@@ -116,6 +117,8 @@ function CreateListing() {
                         case 'running':
                             console.log('Upload is running');
                             break;
+                        default:
+                            break;
                         }
                     }, 
                     (error) => {
@@ -138,10 +141,22 @@ function CreateListing() {
             return;
         });
 
-        console.log(imgUrls);
+        const formDataCopy = {
+            ...formData,
+            imgUrls,
+            geolocation,
+            timestamp: serverTimestamp(),
+        }
 
- 
+        delete formDataCopy.images;
+        delete formDataCopy.address;
+        location && (formDataCopy.location = location);
+        !formDataCopy.offer && delete formDataCopy.discountedPrice;
+
+        const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
         setLoading(false);
+        toast.success('Listing successfully created.');
+        navigate(`/category/${formDataCopy.type}/${docRef.id}`);
     }
 
     const handleMutate = e => {
