@@ -97,7 +97,7 @@ function SignUp() {
 
         <OAuth/>
 
-        <Link to='/sign-in' className='registerLink'>
+        <Link to='/sign-in' className='registerLink pd-bt'>
           Sign In Instead
         </Link>
     

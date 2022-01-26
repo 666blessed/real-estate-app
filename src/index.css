@@ -827,3 +827,7 @@ button {
 .no-br {
   border-radius: 0;
 }
+
+.pd-bt {
+  padding-bottom: 70px;
+}
