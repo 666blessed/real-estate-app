@@ -819,3 +819,11 @@ button {
   font-size: 0.8rem;
   opacity: 0.75;
 }
+
+.swiperSlideDiv {
+  border-radius: 1.5rem;
+}
+
+.no-br {
+  border-radius: 0;
+}
