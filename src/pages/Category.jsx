@@ -103,7 +103,8 @@ function Category() {
                     <p className="loadMore" onClick={handleFetchMoreListings}>
                         Load More
                     </p>                   
-                </> : <p>No listings for {params.categoryName}</p>}
+                </> : <p>No listings for {params.categoryName}</p>
+            }
         </div>
     )
 }
