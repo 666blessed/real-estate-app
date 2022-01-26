@@ -1,10 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {ReactComponent as DeleteIcon} from '../assets/svg/deleteIcon.svg';
+import {ReactComponent as EditIcon} from '../assets/svg/editIcon.svg';
 import bedIcon from '../assets/svg/bedIcon.svg';
 import bathtubIcon from '../assets/svg/bathtubIcon.svg';
 
-function ListingItem({listing, id, handleDelete}) {
+
+function ListingItem({listing, id, handleDelete, handleEdit}) {
     return (
         <li className='categoryListing'>
             <Link to={`/${listing.type}/${id}`} 
@@ -47,6 +49,9 @@ function ListingItem({listing, id, handleDelete}) {
                 <DeleteIcon className='removeIcon' fill='rbg(231, 76, 60)' 
                 onClick={() => handleDelete(listing.id, listing.name)}/>
             )}
+
+            {handleEdit && <EditIcon className='editIcon' 
+            onClick={() => handleEdit(id)}/>}
         </li>
     );
 }

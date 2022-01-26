@@ -80,6 +80,8 @@ function Profile() {
     } 
   }
 
+  const handleEdit = (listingId) => navigate(`/edit-listing/${listingId}`)
+
   const handleChange = (e) => {
     setFormData((prevState) => ({
       ...prevState, 
@@ -131,6 +133,7 @@ function Profile() {
                 listing={listing.data} 
                 id={listing.id}
                 handleDelete={() => handleDelete(listing.id)}
+                handleEdit={() => handleEdit(listing.id)}
               />
             ))}
           </ul>
